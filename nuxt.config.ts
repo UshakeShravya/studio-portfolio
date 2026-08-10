@@ -11,6 +11,10 @@ export default defineNuxtConfig({
     },
   },
 
+  nitro: {
+    preset: 'netlify',
+  },
+
   runtimeConfig: {
     // Server-only secrets — never exposed to the browser
     contentfulSpaceId: '',
