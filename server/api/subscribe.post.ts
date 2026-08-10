@@ -28,7 +28,7 @@ export default defineEventHandler(async (event) => {
       body: { email_address: email, status: 'subscribed' },
     })
 
-    return { success: true, message: 'You're subscribed! Thanks for signing up.' }
+    return { success: true, message: "You're subscribed! Thanks for signing up." }
   } catch (error: unknown) {
     const body = (error as { data?: MailchimpErrorResponse }).data
 

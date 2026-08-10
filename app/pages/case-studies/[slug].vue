@@ -27,25 +27,32 @@ if (!caseStudy.value && !error.value) {
 
 <template>
   <main v-if="caseStudy">
-    <article>
-      <header>
+    <div class="container article-container">
+
+      <NuxtLink to="/" class="back-link">← Back to home</NuxtLink>
+
+      <header class="article-header">
         <h1>{{ caseStudy.title }}</h1>
-        <time :datetime="caseStudy.publishDate">{{ caseStudy.publishDate }}</time>
-        <p v-if="caseStudy.author">By {{ caseStudy.author.name }}</p>
+        <div class="article-meta">
+          <time :datetime="caseStudy.publishDate">{{ formatDate(caseStudy.publishDate) }}</time>
+          <span v-if="caseStudy.author">{{ caseStudy.author.name }}</span>
+        </div>
       </header>
 
-      <img
-        v-if="caseStudy.coverImage"
-        :src="caseStudy.coverImage.url"
-        :alt="caseStudy.coverImage.description ?? caseStudy.title"
-      />
+      <div v-if="caseStudy.coverImage" class="article-cover">
+        <img
+          :src="caseStudy.coverImage.url"
+          :alt="caseStudy.coverImage.description ?? caseStudy.title"
+        />
+      </div>
 
-      <p v-if="caseStudy.client"><strong>Client:</strong> {{ caseStudy.client }}</p>
-      <p v-if="caseStudy.results"><strong>Results:</strong> {{ caseStudy.results }}</p>
+      <div v-if="caseStudy.client || caseStudy.results" class="article-facts">
+        <p v-if="caseStudy.client"><strong>Client:</strong> {{ caseStudy.client }}</p>
+        <p v-if="caseStudy.results"><strong>Results:</strong> {{ caseStudy.results }}</p>
+      </div>
 
-      <div v-if="bodyHtml" v-html="bodyHtml" />
-    </article>
+      <div v-if="bodyHtml" class="prose" v-html="bodyHtml" />
 
-    <NuxtLink to="/">← Back to home</NuxtLink>
+    </div>
   </main>
 </template>

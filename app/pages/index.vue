@@ -13,29 +13,54 @@ const { data } = await useAsyncData<IndexData>('index', () =>
 
 <template>
   <main>
-    <h1>Studio Portfolio</h1>
+    <div class="container">
 
-    <section>
-      <h2>Posts</h2>
-      <ul v-if="data?.postCollection.items.length">
-        <li v-for="post in data.postCollection.items" :key="post.slug">
-          <NuxtLink :to="`/posts/${post.slug}`">{{ post.title }}</NuxtLink>
-          <time :datetime="post.publishDate">{{ post.publishDate }}</time>
-        </li>
-      </ul>
-      <p v-else>No posts yet.</p>
-    </section>
+      <div class="page-hero">
+        <h1>Studio Portfolio</h1>
+        <p>Writing and work from the studio.</p>
+      </div>
 
-    <section>
-      <h2>Case Studies</h2>
-      <ul v-if="data?.caseStudyCollection.items.length">
-        <li v-for="cs in data.caseStudyCollection.items" :key="cs.slug">
-          <NuxtLink :to="`/case-studies/${cs.slug}`">{{ cs.title }}</NuxtLink>
-          <p v-if="cs.client">Client: {{ cs.client }}</p>
-          <time :datetime="cs.publishDate">{{ cs.publishDate }}</time>
-        </li>
-      </ul>
-      <p v-else>No case studies yet.</p>
-    </section>
+      <section class="page-section">
+        <h2 class="section-heading">Posts</h2>
+        <div v-if="data?.postCollection.items.length" class="card-grid">
+          <article
+            v-for="post in data.postCollection.items"
+            :key="post.slug"
+            class="card"
+          >
+            <p class="card-title">
+              <NuxtLink :to="`/posts/${post.slug}`">{{ post.title }}</NuxtLink>
+            </p>
+            <div class="card-meta">
+              <time :datetime="post.publishDate">{{ formatDate(post.publishDate) }}</time>
+              <span v-if="post.author">{{ post.author.name }}</span>
+            </div>
+          </article>
+        </div>
+        <p v-else>No posts yet.</p>
+      </section>
+
+      <section class="page-section">
+        <h2 class="section-heading">Case Studies</h2>
+        <div v-if="data?.caseStudyCollection.items.length" class="card-grid">
+          <article
+            v-for="cs in data.caseStudyCollection.items"
+            :key="cs.slug"
+            class="card"
+          >
+            <p class="card-title">
+              <NuxtLink :to="`/case-studies/${cs.slug}`">{{ cs.title }}</NuxtLink>
+            </p>
+            <p v-if="cs.client" class="card-client">{{ cs.client }}</p>
+            <div class="card-meta">
+              <time :datetime="cs.publishDate">{{ formatDate(cs.publishDate) }}</time>
+              <span v-if="cs.author">{{ cs.author.name }}</span>
+            </div>
+          </article>
+        </div>
+        <p v-else>No case studies yet.</p>
+      </section>
+
+    </div>
   </main>
 </template>

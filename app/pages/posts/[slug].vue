@@ -27,22 +27,27 @@ if (!post.value && !error.value) {
 
 <template>
   <main v-if="post">
-    <article>
-      <header>
+    <div class="container article-container">
+
+      <NuxtLink to="/" class="back-link">← Back to home</NuxtLink>
+
+      <header class="article-header">
         <h1>{{ post.title }}</h1>
-        <time :datetime="post.publishDate">{{ post.publishDate }}</time>
-        <p v-if="post.author">By {{ post.author.name }}</p>
+        <div class="article-meta">
+          <time :datetime="post.publishDate">{{ formatDate(post.publishDate) }}</time>
+          <span v-if="post.author">{{ post.author.name }}</span>
+        </div>
       </header>
 
-      <img
-        v-if="post.coverImage"
-        :src="post.coverImage.url"
-        :alt="post.coverImage.description ?? post.title"
-      />
+      <div v-if="post.coverImage" class="article-cover">
+        <img
+          :src="post.coverImage.url"
+          :alt="post.coverImage.description ?? post.title"
+        />
+      </div>
 
-      <div v-if="bodyHtml" v-html="bodyHtml" />
-    </article>
+      <div v-if="bodyHtml" class="prose" v-html="bodyHtml" />
 
-    <NuxtLink to="/">← Back to home</NuxtLink>
+    </div>
   </main>
 </template>
